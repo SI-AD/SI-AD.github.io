@@ -3,7 +3,7 @@ title: "Todo sorbre SIAD"
 
 ---
 
-Aqui cargaremos informacion sobre la pagina
+Aqui cargaremos informacion sobre la pagina y demas.
 
 
 
