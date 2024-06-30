@@ -2,22 +2,20 @@
 title: "SIAD"
 ---
 
+
 Bienvenidos a SIAD,
 
-En el Semillero de Investigación Análisis de Datos (SIAD), nos dedicamos a fomentar el aprendizaje y la innovación en el campo del análisis de datos. Nuestra misión es capacitar a estudiantes y profesionales para que desarrollen habilidades avanzadas en el análisis de información, utilizando técnicas y herramientas de vanguardia.
+En el Semillero de Investigación Análisis de Datos (SIAD), nos dedicamos a  fomentar el aprendizaje y la innovación en el campo del análisis de datos. Nuestra misión es capacitar a estudiantes y profesionales para que desarrollen habilidades avanzadas en el análisis de información, utilizando técnicas y herramientas de vanguardia.
 
 En SIAD, creemos que el análisis de datos es fundamental para la toma de decisiones informadas en cualquier sector. Por ello, ofrecemos una plataforma colaborativa donde los miembros pueden participar en proyectos de investigación, asistir a talleres y seminarios, y compartir conocimientos con una comunidad apasionada por los datos.
 
-Únete a nosotros y forma parte de un entorno dinámico y estimulante, donde cada idea cuenta y cada dato tiene el poder de transformar el mundo.
-
-
+<br><br><br><br>
 
 ## Redes sociales
-&copy; 2024 SIAD. Todos los derechos reservados.
 
 <div class="social-media">
-  [Facebook](https://www.facebook.com/tu-perfil)
-  [Twitter](https://twitter.com/tu-perfil)
-  [Instagram](https://www.instagram.com/tu-perfil)
-  [LinkedIn](https://www.linkedin.com/in/tu-perfil)
+  [Twitter](https://x.com/siadata_unimag?s=21)
+  [Instagram](https://www.instagram.com/siadata_unimag?igsh=MWZ1YzF4YjhoZWNlaw==)
+  [linkedin]()
 </div>
+&copy; 2024 SIAD. Todos los derechos reservados.

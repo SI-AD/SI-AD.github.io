@@ -1,8 +1,27 @@
 ---
 title: "Todo sorbre SIAD"
-  output:
-  html_document:
-    css: styles.css
+
 ---
 
 Aqui cargaremos informacion sobre la pagina
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
