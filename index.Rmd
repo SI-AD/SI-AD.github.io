@@ -1,5 +1,10 @@
 ---
-title: "My Website"
+title: "SIAD"
 ---
 
-Hello, Website!
+Bienvenidos a SIAD
+En el Semillero de Investigación Análisis de Datos (SIAD), nos dedicamos a fomentar el aprendizaje y la innovación en el campo del análisis de datos. Nuestra misión es capacitar a estudiantes y profesionales para que desarrollen habilidades avanzadas en el análisis de información, utilizando técnicas y herramientas de vanguardia.
+
+En SIAD, creemos que el análisis de datos es fundamental para la toma de decisiones informadas en cualquier sector. Por ello, ofrecemos una plataforma colaborativa donde los miembros pueden participar en proyectos de investigación, asistir a talleres y seminarios, y compartir conocimientos con una comunidad apasionada por los datos.
+
+Únete a nosotros y forma parte de un entorno dinámico y estimulante, donde cada idea cuenta y cada dato tiene el poder de transformar el mundo.
