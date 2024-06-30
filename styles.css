@@ -1,0 +1,78 @@
+body {
+    background-image: url('imagenes/logo.jpg'); /* Ruta relativa a la imagen */
+    background-size: 30%; /* Ajusta la imagen para que cubra toda la página */
+    background-attachment: fixed; /* Hace que la imagen de fondo no se mueva al hacer scroll */
+    background-repeat: no-repeat; /* Evita que la imagen se repita */
+    background-position: center; /* Centra la imagen de fondo */
+    font-family: 'Roboto', sans-serif; /* Define la fuente de texto */
+    color: black; /* Cambia el color del texto a blanco para que se vea bien sobre la imagen */
+    line-height: 1.6; /* Define la altura de línea para mejorar la legibilidad */
+}
+
+/* Aplica estilos al encabezado */
+header {
+    background-color: #007BFF; /* Define el color de fondo del encabezado */
+    color: yellow; /* Define el color del texto del encabezado */
+    padding: 1rem; /* Define el relleno interior del encabezado */
+    text-align: center; /* Centra el texto del encabezado */
+}
+
+/* Estilos para la barra de navegación */
+nav ul {
+    list-style: none; /* Elimina los puntos de la lista */
+    padding: 0; /* Elimina el relleno interior */
+    background-color: blue; /* Define el color de fondo de la barra de navegación */
+}
+
+/* Estilos para los elementos de la lista de navegación */
+nav ul li {
+    display: inline; /* Muestra los elementos de la lista en línea */
+    margin-right: 10px; /* Define un margen a la derecha entre los elementos */
+}
+
+/* Estilos para los enlaces en la barra de navegación */
+nav ul li a {
+    color: green; /* Define el color del texto de los enlaces */
+    text-decoration: none; /* Elimina el subrayado de los enlaces */
+}
+
+/* Estilos para el contenido principal */
+main {
+    padding: 20px; /* Define el relleno interior del contenido principal */
+}
+
+/* Estilos para las secciones del contenido */
+section {
+    margin-bottom: 20px; /* Define un margen inferior para separar las secciones */
+}
+
+/* Estilos para el pie de página */
+footer {
+    background-color: #333; /* Define el color de fondo del pie de página */
+    color: white; /* Define el color del texto del pie de página */
+    text-align: center; /* Centra el texto del pie de página */
+    padding: 1rem; /* Define el relleno interior del pie de página */
+    position: fixed; /* Fija el pie de página en la parte inferior de la página */
+    bottom: 0; /* Alinea el pie de página con la parte inferior */
+    width: 100%; /* Asegura que el pie de página ocupe el ancho completo de la página */
+}
+
+/* Estilos para los botones */
+button {
+    transition: background-color 0.3s ease; /* Añade una transición suave al cambiar el color de fondo */
+}
+
+/* Cambia el color de fondo del botón cuando se pasa el cursor sobre él */
+button:hover {
+    background-color: #555; /* Define el color de fondo del botón cuando se pasa el cursor sobre él */
+}
+
+/* Estilos responsivos para pantallas pequeñas */
+@media (max-width: 768px) {
+    body {
+        font-size: 14px; /* Reduce el tamaño de la fuente en pantallas pequeñas */
+    }
+    .container {
+        padding: 10px; /* Reduce el relleno interior en contenedores en pantallas pequeñas */
+    }
+}

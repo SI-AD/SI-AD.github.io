@@ -1,7 +1,7 @@
-name: "my-website"
+name: "SIAD"
 output_dir: "."
 navbar:
-  title: "My Website"
+  title: "SIAD"
   left:
     - text: "Home"
       href: index.html
@@ -11,3 +11,4 @@ output:
   html_document:
     theme: cosmo
     highlight: textmate
+    css: styles.css
