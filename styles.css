@@ -10,7 +10,7 @@ body::before {
     content: "";
     background-image: url('imagenes/logo.jpg'); /* Ruta relativa a la imagen */
     background-size: 30%; /* Ajusta la imagen para que cubra toda la página */
-    opacity: 0.5;
+    opacity: 0.8;
     background-attachment: fixed; /* Hace que la imagen de fondo no se mueva al hacer scroll */
     background-repeat: no-repeat; /* Evita que la imagen se repita */
     background-position: center; /* Centra la imagen de fondo */
@@ -20,25 +20,10 @@ body::before {
     height: 100%;
 }
 
-/* Estilos para el contenido principal */
-main {
-    padding: 20px; /* Define el relleno interior del contenido principal */
-}
 
 /* Estilos para las secciones del contenido */
 section {
-    margin-bottom: 20px; /* Define un margen inferior para separar las secciones */
-}
-
-/* Estilos para el pie de página */
-footer {
-    background-color: #333; /* Define el color de fondo del pie de página */
-    color: white; /* Define el color del texto del pie de página */
-    text-align: center; /* Centra el texto del pie de página */
-    padding: 1rem; /* Define el relleno interior del pie de página */
-    position: fixed; /* Fija el pie de página en la parte inferior de la página */
-    bottom: 0; /* Alinea el pie de página con la parte inferior */
-    width: 100%; /* Asegura que el pie de página ocupe el ancho completo de la página */
+    margin-bottom: 50px; /* Define un margen inferior para separar las secciones */
 }
 
 /* Estilos para los botones */

@@ -11,11 +11,33 @@ En SIAD, creemos que el análisis de datos es fundamental para la toma de decisi
 
 <br><br><br>
 
-## Redes sociales
+Nuestras Redes Sociales
 
-<div class="social-media">
-  [Twitter](https://x.com/siadata_unimag?s=21)
-  [Instagram](https://www.instagram.com/siadata_unimag?igsh=MWZ1YzF4YjhoZWNlaw==)
-  [linkedin]()
+ <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+        <style>
+          .social-icons {
+              display: flex;
+              justify-content: ; /* Centra los íconos horizontalmente */
+              margin: 10px 0; /* Espacio arriba y abajo de los íconos, puedes ajustar el valor */
+          }
+          .social-icons a {
+              margin: 0 5px; /* ajustar la distancia entre los iconos*/
+          }
+          .social-icons i {
+              color: black; /* Color de los íconos */
+              font-size: 30px; /* Tamaño de los íconos */
+          }
+        </style>
+        
+<div class="social-icons">
+  <a href="https://www.instagram.com/siadata_unimag?igsh=MWZ1YzF4YjhoZWNlaw==" target="_blank">
+      <i class="fa-brands fa-instagram"></i>
+  </a>
+  <a href="https://x.com/siadata_unimag?s=2" target="_blank">
+      <i class="fa-brands fa-twitter"></i>
+  </a>
+  <a href="1" target="_blank">
+      <i class="fa-brands fa-linkedin"></i>
+  </a>
 </div>
 &copy; 2024 SIAD. Todos los derechos reservados.
