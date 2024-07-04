@@ -6,20 +6,11 @@ author:
     affiliations:
       - name: Universidad del Magdalena, Santa Marta
 date: "05/22/2024"
-lang: es
-toc: true
-toc-depth: 3
-toc-location: right
-toc-title: ""
-fontsize: 13pt
-number-sections: false
 format:
   html:
     theme: 
-    - Quartz
+    - cosmo
     - recording_theme.scss
-      
-self-contained: TRUE
 css: styles
 ---
 
