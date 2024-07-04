@@ -1,0 +1,512 @@
+datad <- getbb("Santa Marta, Magdalena, Colombia")
+# Construir la consulta OSM para obtener universidades
+datad <- opq(bbox = datad) %>%
+add_osm_feature(key = "amenity", value = "university")
+## Obtener los datos en formato sf
+datad_sf <- osmdata_sf(datad)
+## Seleccionar los polígonos y las columnas de interés
+datad_geometria <- datad_sf$osm_polygons %>%
+select(osm_id, name)
+# Filtrar para obtener solo la Universidad del Magdalena
+universidad_del_magdalena <- datad_geometria %>%
+filter(name == "Universidad del Magdalena")
+library(dplyr)
+library(tidyverse)
+mymap <- leaflet(data=universidad_del_magdalena) %>%
+addTiles() %>%
+addPolygons(color = "blue", fillOpacity = 0.5, weight = 2, popup = ~name)
+# Mostrar el mapa
+mymap
+# Crear el mapa de zonas universitarias en Santa Marta
+mapa4 <- opq(bbox = getbb("Universidad del Magdalena, Colombia")) %>%
+add_osm_feature(key = "building", value = "university") %>%
+osmdata_sf()
+# Extraer los polígonos de las zonas universitarias
+cc_geometria <- mapa4$osm_polygons
+# Crear el mapa de leaflet con los polígonos
+mapa <- leaflet(cc_geometria) %>%
+addTiles() %>%
+addPolygons(col = "blue")
+# Agregar los marcadores circulares con los datos de datos_sf2
+mapa_final <- mapa %>%
+addCircleMarkers(data = data_geometria,
+lng = ~lng,        # Columna de longitud
+lat = ~lat,        # Columna de latitud
+color = "red",     # Color de los puntos
+fillOpacity = 0.8  # Opacidad del relleno
+)
+# Mostrar el mapa final
+mapa_final
+#install.packages("sf")
+#todos los centroides
+centr<-st_centroid(cc_geometria)
+leaflet(cc_geometria) %>%
+addTiles() %>%
+addCircleMarkers(data=centr,col="red") %>%
+addPolygons(col="yellow")
+#Distancias de las propiedades a los bloques de la Universidad
+dist_matrix <- st_distance(x = datad_geometria, y = centr)
+# Encontramos la distancia mínima a los bloques de la Universidad
+dist_min <- apply(dist_matrix, 1, min)
+datad_geometria$distancia_zona <- dist_min
+summary(datad_geometria$distancia_zona)
+# Calcular la cantidad total de estudiantes por materia
+t_materia <- aggregate(numero_de_~ materia_qu, data = data_geometria, sum)
+fig <- plot_ly(
+data=t_materia,
+x = ~materia_qu,
+y = ~numero_de_,
+type = 'bar',
+name = 'No. de Estudiantes por Materia'
+)
+# Personalizar el gráfico
+fig <- fig %>% layout(
+title = 'Cantidad de Estudiantes por Materia',
+xaxis = list(title = 'Materia'),
+yaxis = list(title = 'Cantidad de Estudiantes')
+)
+# Mostrar el gráfico
+fig
+library(plotly)
+plot_ly(data=data_geometria,x=~materia_qu,y=~numero_de_,type="scatter",mode = "markers+text",color=~carrera_qu, frame = ~fecha)
+g<-ggplot(data)+
+aes(x=materia_qu,y=numero_de_,colour=carrera_qu,frame=fecha)+
+geom_point()+
+labs(title="Tasa de Riesgo de Pobreza",x="Tasa",y="Tasa con alquiler imputado")+
+scale_colour_discrete(name="carrera_qu")+
+theme_bw()
+ggplotly(g)
+# Calcular la cantidad total de estudiantes por materia
+t_materia <- aggregate(numero_de_~ materia_qu, data = data_geometria, sum)
+fig <- plot_ly(
+data=t_materia,
+x = ~materia_qu,
+y = ~numero_de_,
+type = 'bar',
+name = 'No. de Estudiantes por Materia'
+)
+pal <- c("red", "blue", "green", "yellow", "black")
+# Personalizar el gráfico
+fig <- fig %>% layout(
+title = 'Cantidad de Estudiantes por Materia',
+xaxis = list(title = 'Materia'),
+yaxis = list(title = 'Cantidad de Estudiantes'),
+col=pal
+)
+# Mostrar el gráfico
+fig
+# Calcular la cantidad total de estudiantes por materia
+t_materia <- aggregate(numero_de_~ materia_qu, data = data_geometria, sum)
+fig <- plot_ly(
+data=t_materia,
+x = ~materia_qu,
+y = ~numero_de_,
+type = 'bar',
+name = 'No. de Estudiantes por Materia'
+)
+pal <- c("red", "blue", "green", "yellow", "black")
+# Personalizar el gráfico
+fig <- fig %>% layout(
+title = 'Cantidad de Estudiantes por Materia',
+xaxis = list(title = 'Materia'),
+yaxis = list(title = 'Cantidad de Estudiantes'),
+col=pal
+)
+# Mostrar el gráfico
+fig
+# Calcular la cantidad total de estudiantes por materia
+t_materia <- aggregate(numero_de_~ materia_qu, data = data_geometria, sum)
+pal <- c("red", "blue", "green", "yellow", "black")
+fig <- plot_ly(
+data=t_materia,
+x = ~materia_qu,
+y = ~numero_de_,
+type = 'bar',
+name = 'No. de Estudiantes por Materia'
+col= pal
+# Calcular la cantidad total de estudiantes por materia
+t_materia <- aggregate(numero_de_~ materia_qu, data = data_geometria, sum)
+pal <- c("red", "blue", "green", "yellow", "black")
+fig <- plot_ly(
+data=t_materia,
+x = ~materia_qu,
+y = ~numero_de_,
+type = 'bar',
+name = 'No. de Estudiantes por Materia',
+col= pal
+)
+# Personalizar el gráfico
+fig <- fig %>% layout(
+title = 'Cantidad de Estudiantes por Materia',
+xaxis = list(title = 'Materia'),
+yaxis = list(title = 'Cantidad de Estudiantes')
+)
+# Mostrar el gráfico
+fig
+# Calcular la cantidad total de estudiantes por materia
+t_materia <- aggregate(numero_de_~ materia_qu, data = data_geometria, sum)
+fig <- plot_ly(
+data=t_materia,
+x = ~materia_qu,
+y = ~numero_de_,
+type = 'bar',
+name = 'No. de Estudiantes por Materia',
+color= ~state,
+colors= "set1"
+)
+# Personalizar el gráfico
+fig <- fig %>% layout(
+title = 'Cantidad de Estudiantes por Materia',
+xaxis = list(title = 'Materia'),
+yaxis = list(title = 'Cantidad de Estudiantes')
+)
+# Mostrar el gráfico
+fig
+# Define el rango de fechas
+fecha_inicio <- "2024-04-25"
+fecha_fin <- "2024-05-22"
+library(plotly)
+plot_ly(
+data=data_geometria,
+x=~materia_qu,
+y=~numero_de_,
+type="scatter",
+mode = "markers+text",
+color=~carrera_qu,
+frame = ~fecha
+) %>%
+layout(
+xaxis(list(range=c(fecha_inicio, fecha_fin)))
+)
+# Calcular la cantidad total de estudiantes por materia
+t_materia <- aggregate(numero_de_~ materia_qu, data = data_geometria, sum)
+fig <- plot_ly(
+data=t_materia,
+x = ~materia_qu,
+y = ~numero_de_,
+type = 'bar',
+name = 'No. de Estudiantes por Materia',
+color= ~state,
+colors= "set1"
+)
+# Personalizar el gráfico
+fig <- fig %>% layout(
+title = 'Cantidad de Estudiantes por Materia',
+xaxis = list(title = 'Materia'),
+yaxis = list(title = 'Cantidad de Estudiantes')
+)
+# Mostrar el gráfico
+fig
+# Define el rango de fechas
+fecha_inicio <- "2024-04-25"
+fecha_fin <- "2024-05-22"
+plot_ly(
+data=data_geometria,
+x=~materia_qu,
+y=~numero_de_,
+type="scatter",
+mode = "markers+text",
+color=~carrera_qu,
+frame = ~fecha
+) %>%
+layout(
+xaxis = list(range = c(fecha_inicio, fecha_fin))
+)
+# Calcular la cantidad total de estudiantes por materia
+t_materia <- aggregate(numero_de_~ materia_qu, data = data_geometria, sum)
+fig <- plot_ly(
+data=t_materia,
+x = ~materia_qu,
+y = ~numero_de_,
+type = 'bar',
+name = 'No. de Estudiantes por Materia',
+color= ~state,
+colors= "set1"
+)
+# Personalizar el gráfico
+fig <- fig %>% layout(
+title = 'Cantidad de Estudiantes por Materia',
+xaxis = list(title = 'Materia'),
+yaxis = list(title = 'Cantidad de Estudiantes')
+)
+# Mostrar el gráfico
+fig
+# Calcular la cantidad total de estudiantes por materia
+t_materia <- aggregate(numero_de_~ materia_qu, data = data_geometria, sum)
+fig <- plot_ly(
+data=t_materia,
+x = ~materia_qu,
+y = ~numero_de_,
+type = 'bar',
+name = 'No. de Estudiantes por Materia',
+color= ~state,
+colors= "set1"
+)
+# Personalizar el gráfico
+fig <- fig %>% layout(
+title = 'Cantidad de Estudiantes por Materia',
+xaxis = list(title = 'Materia'),
+yaxis = list(title = 'Cantidad de Estudiantes')
+)
+# Mostrar el gráfico
+fig
+plot_ly(
+data=data_geometria,
+x=~materia_qu,
+y=~numero_de_,
+type="scatter",
+mode = "markers+text",
+color=~carrera_qu,
+frame = ~fecha
+)
+# Calcular la cantidad total de estudiantes por materia
+t_materia <- aggregate(numero_de_~ materia_qu, data = data_geometria, sum)
+fig <- plot_ly(
+data=t_materia,
+x = ~materia_qu,
+y = ~numero_de_,
+type = 'bar',
+name = 'No. de Estudiantes por Materia',
+color= ~state,
+colors= "set1"
+)
+# Personalizar el gráfico
+fig <- fig %>% layout(
+title = 'Cantidad de Estudiantes por Materia',
+xaxis = list(title = 'Materia'),
+yaxis = list(title = 'Cantidad de Estudiantes')
+)
+# Mostrar el gráfico
+fig
+# Calcular la cantidad total de estudiantes por materia
+t_materia <- aggregate(numero_de_~ materia_qu, data = data_geometria, sum)
+fig <- plot_ly(
+data=t_materia,
+x = ~materia_qu,
+y = ~numero_de_,
+type = 'bar',
+name = 'No. de Estudiantes por Materia'
+)
+# Personalizar el gráfico
+fig <- fig %>% layout(
+title = 'Cantidad de Estudiantes por Materia',
+xaxis = list(title = 'Materia'),
+yaxis = list(title = 'Cantidad de Estudiantes')
+)
+# Mostrar el gráfico
+fig
+g<-ggplot(data)+
+aes(x=materia_qu,
+y=numero_de_,
+colour=carrera_qu,
+frame=fecha)+
+geom_point()+
+labs(title="Tasa de Riesgo de Pobreza",x="Tasa",y="Tasa con alquiler imputado")+
+scale_colour_discrete(name="carrera_qu")+
+theme_bw()
+ggplotly(g)
+# Calcular la cantidad total de estudiantes por materia
+t_materia <- aggregate(numero_de_~ materia_qu, data = data_geometria, sum)
+fig <- plot_ly(
+data=t_materia,
+x = ~materia_qu,
+y = ~numero_de_,
+type = 'bar',
+name = 'No. de Estudiantes por Materia'
+)
+# Personalizar el gráfico
+fig <- fig %>% layout(
+title = 'Cantidad de Estudiantes por Materia',
+xaxis = list(title = 'Materia'),
+yaxis = list(title = 'Cantidad de Estudiantes')
+)
+# Mostrar el gráfico
+fig
+plot_ly(
+data=data_geometria,
+x=~materia_qu,
+y=~numero_de_,
+type="scatter",
+mode = "markers+text",
+color=~carrera_qu,
+frame = ~fecha
+)
+plot_ly(
+data=data_geometria,
+x=~materia_qu,
+y=~numero_de_,
+type="scatter",
+mode = "markers+text",
+color=~carrera_qu
+)
+g<-ggplot(data)+
+aes(x=materia_qu,
+y=numero_de_,
+colour=carrera_qu,
+frame=fecha)+
+geom_point()+
+labs(title="Tasa de Riesgo de Pobreza",x="Tasa",y="Tasa con alquiler imputado")+
+scale_colour_discrete(name="carrera_qu")+
+theme_bw()
+ggplotly(g)
+g<-ggplot(data)+
+aes(x=materia_qu,
+y=numero_de_,
+colour=carrera_qu)+
+geom_point()+
+labs(title="Estudiantes en zona de estudio por carrera",x="Materia que estudia",y="Numero de estudiantes en la zona")+
+scale_colour_discrete(name="carrera_qu")+
+theme_bw()
+ggplotly(g)
+g<-ggplot(data)+
+aes(x=materia_qu,
+y=numero_de_,
+colour=carrera_qu)+
+geom_point()+
+labs(title="Estudiantes en zona de estudio por carrera",x="Materia que estudia",y="Numero de estudiantes en la zona")+
+scale_colour_discrete(name="carrera que estudia")+
+theme_bw()
+ggplotly(g)
+# Se carga la base de datos
+data <- st_read("survey.shp", quiet=TRUE)
+#instalar paquetes
+#install.packages("sf")
+#install.packages("tidyverse")
+#install.packages("ggplot2")
+#install.packages("readr")
+#install.packages("plotly")
+#install.packages("osmdata")
+#install.packages("leaflet")
+#install.packages("kableExtra")
+library(pander)
+library(sf)
+library(tidyverse)
+library(ggplot2)
+library(readr)
+library(plotly)
+library(osmdata)
+library(leaflet)
+library(kableExtra)
+# Se carga la base de datos
+data <- st_read("survey.shp", quiet=TRUE)
+kable(head(data, 3))
+#install.packages("sf")
+#todos los centroides
+centr<-st_centroid(cc_geometria)
+leaflet(cc_geometria) %>%
+addTiles() %>%
+addCircleMarkers(data=centr,col="red") %>%
+addPolygons(col="yellow")
+#Estandarizamos las respuestas sobre que carrera estudia y que materia se encuentra estudiando, debido a que puede contener caracteres tanto en minuscula como en mayuscula al igual que contener tildes que afecten el análisis.
+data<-data %>% mutate(materia_qu=tolower(materia_qu))
+#eliminar tildes
+data <- data %>% mutate(materia_qu=iconv(materia_qu, from = "UTF-8", to = "ASCII//TRANSLIT"))
+data<-data %>% mutate(carrera_qu=tolower(carrera_qu))
+#eliminar tildes
+data <- data %>% mutate(carrera_qu=iconv(carrera_qu, from = "UTF-8", to = "ASCII//TRANSLIT"))
+# Define el número de fila que deseas actualizar
+fila_numero <- 40
+columna_nombre <- "carrera_qu"  # Por ejemplo, actualizaremos la columna "carrera_qu"
+# Asigna el nuevo valor a la celda específica
+data[fila_numero, columna_nombre] <- "contaduria publica"
+# Define el número de fila que deseas actualizar
+fila_numero <- 39
+columna_nombre <- "carrera_qu"  # Por ejemplo, actualizaremos la columna "carrera_qu"
+# Asigna el nuevo valor a la celda específica
+data[fila_numero, columna_nombre] <- "negocios internacionales"
+# Define el número de fila que deseas actualizar
+fila_numero <- 26
+columna_nombre <- "materia_qu"  # Por ejemplo, actualizaremos la columna "carrera_qu"
+# Asigna el nuevo valor a la celda específica
+data[fila_numero, columna_nombre] <- "circuito dc"
+#Verificar duplicados en filas completas
+duplicados_filas <- duplicated(data)
+#Convertimos la columna geometry en un objeto espacial
+data_sf<-st_as_sf(data)
+#Extraemos coordenadas lon y lat
+coordenadas<-st_coordinates(data_sf)
+#Creamos un data frame con los datos separados (SOLO COORDENADAS)
+data_sep<-as.data.frame(coordenadas)
+#Renombrar columnas
+colnames(data_sep)<- c("lng", "lat")
+# COMBINAMOS LOS DATOS ESPACIALES A NUESTRA DATAFRAME INICIAL
+data_geometria <- cbind(data_sf, data_sep)
+# Graficar la Universidad del Magdalena en los limites de Santa Marta
+datad <- getbb("Santa Marta, Magdalena, Colombia")
+# Construir la consulta OSM para obtener universidades
+datad <- opq(bbox = datad) %>%
+add_osm_feature(key = "amenity", value = "university")
+## Obtener los datos en formato sf
+datad_sf <- osmdata_sf(datad)
+## Seleccionar los polígonos y las columnas de interés
+datad_geometria <- datad_sf$osm_polygons %>%
+select(osm_id, name)
+# Filtrar para obtener solo la Universidad del Magdalena
+universidad_del_magdalena <- datad_geometria %>%
+filter(name == "Universidad del Magdalena")
+library(dplyr)
+library(tidyverse)
+mymap <- leaflet(data=universidad_del_magdalena) %>%
+addTiles() %>%
+addPolygons(color = "blue", fillOpacity = 0.5, weight = 2, popup = ~name)
+# Mostrar el mapa
+mymap
+# Crear el mapa de zonas universitarias en Santa Marta
+mapa4 <- opq(bbox = getbb("Universidad del Magdalena, Colombia")) %>%
+add_osm_feature(key = "building", value = "university") %>%
+osmdata_sf()
+# Extraer los polígonos de las zonas universitarias
+cc_geometria <- mapa4$osm_polygons
+# Crear el mapa de leaflet con los polígonos
+mapa <- leaflet(cc_geometria) %>%
+addTiles() %>%
+addPolygons(col = "blue")
+# Agregar los marcadores circulares con los datos de datos_sf2
+mapa_final <- mapa %>%
+addCircleMarkers(data = data_geometria,
+lng = ~lng,        # Columna de longitud
+lat = ~lat,        # Columna de latitud
+color = "red",     # Color de los puntos
+fillOpacity = 0.8  # Opacidad del relleno
+)
+# Mostrar el mapa final
+mapa_final
+#install.packages("sf")
+#todos los centroides
+centr<-st_centroid(cc_geometria)
+leaflet(cc_geometria) %>%
+addTiles() %>%
+addCircleMarkers(data=centr,col="red") %>%
+addPolygons(col="yellow")
+#Distancias de las propiedades a los bloques de la Universidad
+dist_matrix <- st_distance(x = datad_geometria, y = centr)
+# Encontramos la distancia mínima a los bloques de la Universidad
+dist_min <- apply(dist_matrix, 1, min)
+datad_geometria$distancia_zona <- dist_min
+summary(datad_geometria$distancia_zona)
+# Calcular la cantidad total de estudiantes por materia
+t_materia <- aggregate(numero_de_~ materia_qu, data = data_geometria, sum)
+fig <- plot_ly(
+data=t_materia,
+x = ~materia_qu,
+y = ~numero_de_,
+type = 'bar',
+name = 'No. de Estudiantes por Materia'
+)
+# Personalizar el gráfico
+fig <- fig %>% layout(
+title = 'Cantidad de Estudiantes por Materia',
+xaxis = list(title = 'Materia'),
+yaxis = list(title = 'Cantidad de Estudiantes')
+)
+# Mostrar el gráfico
+fig
+g<-ggplot(data)+
+aes(x=materia_qu,
+y=numero_de_,
+colour=carrera_qu)+
+geom_point()+
+labs(title="Estudiantes en zona de estudio por carrera",x="Materia que estudia",y="Numero de estudiantes en la zona")+
+scale_colour_discrete(name="carrera que estudia")+
+theme_bw()
+ggplotly(g)

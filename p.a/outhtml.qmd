@@ -1,0 +1,308 @@
+---
+title: "ANALISIS SOBRE EL USO DE LAS ZONAS DE ESTUDIO (Unimag)"
+subtitle: "Analisis de Datos y Programacion básica"
+author: 
+  - name: Anghely Perez, Juan Adarraga, Carlos Vega & Esteban Villafañe
+    affiliations:
+      - name: Universidad del Magdalena, Santa Marta
+date: "05/22/2024"
+lang: es
+toc: true
+toc-depth: 3
+toc-location: right
+toc-title: ""
+fontsize: 13pt
+number-sections: false
+format:
+  html:
+    theme: 
+    - Quartz
+    - recording_theme.scss
+      
+self-contained: true
+css: styles
+---
+
+## INTRODUCCION
+
+Este trabajo se enfoca en desarrollar un análisis de el uso de las zonas de descanso por los estudiantes de distintas carreras en la Universidad del Magdalena, Colombia, utilizando análisis espacial. Se busca determinar cuales son aquellas zonas de mayor uso por los estudiantes asi como visualizar que materias son las mas estudiadas en dichos puntos.
+
+## Tratamiento de datos.
+
+los datos utilizados en el presente estudio cuenta con una colección de 50 datos recolectados en todo el campus de la institucion, almacenados el sitio web [ArcGIS](#0) con el objetivo de analizar y estudiar aquellas zonas usadas para el estudio y llegar a saber cuales son las carreras que mas hacen uso de ellas.
+
+### Instalacion y carga de librerias
+
+```{r warning=FALSE, message=FALSE}
+#instalar paquetes 
+ 
+#install.packages("sf")
+#install.packages("tidyverse")
+#install.packages("ggplot2")
+#install.packages("readr")
+#install.packages("plotly")
+#install.packages("osmdata")
+#install.packages("leaflet")
+#install.packages("kableExtra")
+
+library(pander)
+library(sf)
+library(tidyverse)
+library(ggplot2)
+library(readr)
+library(plotly)
+library(osmdata)
+library(leaflet)
+library(kableExtra)
+```
+
+### Lectura de base de datos`(.sph)`
+
+```{r}
+# Se carga la base de datos
+data <- st_read("survey.shp", quiet=TRUE)
+
+kable(head(data, 3))
+```
+
+## Pasos para el tratamiento de datos
+
+El procesamiento y tratamiento de datos juegan un papel fundamental en la generación de información significativa, esto garantizamos precisión en los resultados. Por ello realizamos esta serie de pasos.
+
+### 1. Estandarizacion de datos (caracteres)
+
+```{r}
+#Estandarizamos las respuestas sobre que carrera estudia y que materia se encuentra estudiando, debido a que puede contener caracteres tanto en minuscula como en mayuscula al igual que contener tildes que afecten el análisis.
+ 
+data<-data %>% mutate(materia_qu=tolower(materia_qu))
+ 
+#eliminar tildes
+data <- data %>% mutate(materia_qu=iconv(materia_qu, from = "UTF-8", to = "ASCII//TRANSLIT"))
+ 
+data<-data %>% mutate(carrera_qu=tolower(carrera_qu))
+ 
+#eliminar tildes
+data <- data %>% mutate(carrera_qu=iconv(carrera_qu, from = "UTF-8", to = "ASCII//TRANSLIT"))
+
+```
+
+### Caracteres incompletos
+
+Eliminamos errores humanos al escribir el texto, para estandarizar las respuestas, tanto de manterias que se estudian como nombres de las carreras y asi evitar datos duplicados.
+
+```{r}
+
+# Define el número de fila que deseas actualizar
+fila_numero <- 40
+columna_nombre <- "carrera_qu"  # Por ejemplo, actualizaremos la columna "carrera_qu"
+
+# Asigna el nuevo valor a la celda específica
+data[fila_numero, columna_nombre] <- "contaduria publica"
+
+# Define el número de fila que deseas actualizar
+fila_numero <- 39
+columna_nombre <- "carrera_qu"  # Por ejemplo, actualizaremos la columna "carrera_qu"
+
+# Asigna el nuevo valor a la celda específica
+data[fila_numero, columna_nombre] <- "negocios internacionales"
+
+
+# Define el número de fila que deseas actualizar
+fila_numero <- 26
+columna_nombre <- "materia_qu"  # Por ejemplo, actualizaremos la columna "carrera_qu"
+
+# Asigna el nuevo valor a la celda específica
+data[fila_numero, columna_nombre] <- "circuito dc"
+
+```
+
+#### Verificar los duplicados
+
+```{r}
+#Verificar duplicados en filas completas
+duplicados_filas <- duplicated(data)
+```
+
+### 2. Convertimos los datos a objetos espaciales
+
+```{r}
+#Convertimos la columna geometry en un objeto espacial
+data_sf<-st_as_sf(data)
+ 
+#Extraemos coordenadas lon y lat 
+coordenadas<-st_coordinates(data_sf)
+ 
+#Creamos un data frame con los datos separados (SOLO COORDENADAS)
+data_sep<-as.data.frame(coordenadas)
+ 
+#Renombrar columnas 
+colnames(data_sep)<- c("lng", "lat")
+ 
+# COMBINAMOS LOS DATOS ESPACIALES A NUESTRA DATAFRAME INICIAL
+data_geometria <- cbind(data_sf, data_sep)
+```
+
+### 3. Visualización del mapa delimitado (zona de interés)
+
+```{r warning=FALSE, message=FALSE}
+
+# Graficar la Universidad del Magdalena en los limites de Santa Marta
+datad <- getbb("Santa Marta, Magdalena, Colombia")
+
+# Construir la consulta OSM para obtener universidades
+datad <- opq(bbox = datad) %>%
+  add_osm_feature(key = "amenity", value = "university")
+
+## Obtener los datos en formato sf
+datad_sf <- osmdata_sf(datad)
+
+## Seleccionar los polígonos y las columnas de interés
+datad_geometria <- datad_sf$osm_polygons %>% 
+  select(osm_id, name)
+
+# Filtrar para obtener solo la Universidad del Magdalena
+universidad_del_magdalena <- datad_geometria %>% 
+  filter(name == "Universidad del Magdalena")
+
+library(dplyr)
+library(tidyverse)
+
+mymap <- leaflet(data=universidad_del_magdalena) %>% 
+  addTiles() %>%
+  addPolygons(color = "blue", fillOpacity = 0.5, weight = 2, popup = ~name)
+
+# Mostrar el mapa
+mymap
+```
+
+El polígono delimitado en color azul nos muestra toda el area de la Universidad del Magdalena sobre el cual estaremos trabajando.
+
+### Creación de variable edificios principales
+
+Creamos la variable edificios principales que nos ayudará a visualizar zonas de interes donde, los estudiantes tienden a estudiar, usando las funciones disponibles en Openstreetmap.com con ayuda de `osmdata` y `leaflet`
+
+```{r}
+
+# Crear el mapa de zonas universitarias en Santa Marta
+mapa4 <- opq(bbox = getbb("Universidad del Magdalena, Colombia")) %>% 
+  add_osm_feature(key = "building", value = "university") %>%
+  osmdata_sf()
+
+# Extraer los polígonos de las zonas universitarias
+cc_geometria <- mapa4$osm_polygons
+
+# Crear el mapa de leaflet con los polígonos
+mapa <- leaflet(cc_geometria) %>% 
+  addTiles() %>% 
+  addPolygons(col = "blue")
+
+# Agregar los marcadores circulares con los datos de datos_sf2
+mapa_final <- mapa %>% 
+  addCircleMarkers(data = data_geometria,
+                   lng = ~lng,        # Columna de longitud
+                   lat = ~lat,        # Columna de latitud
+                   color = "red",     # Color de los puntos
+                   fillOpacity = 0.8  # Opacidad del relleno
+  )
+
+# Mostrar el mapa final
+mapa_final
+```
+
+### Centroides añadidos al mapa
+
+Añadimos los centroides (bloques de la Universidad) en base a esto podemos analizar la distancia entre las encuestas y los bloques principales de la Universidad, usando `summary` nos brinda un resumen estadistico que aplicaremos a continuación.
+
+```{r warning=FALSE, message=FALSE}
+#install.packages("sf")
+#todos los centroides
+centr<-st_centroid(cc_geometria)
+
+leaflet(cc_geometria) %>% 
+  addTiles() %>% 
+  addCircleMarkers(data=centr,col="red") %>% 
+  addPolygons(col="yellow")  
+```
+
+```{r}
+#Distancias de las propiedades a los bloques de la Universidad
+dist_matrix <- st_distance(x = datad_geometria, y = centr)
+
+# Encontramos la distancia mínima a los bloques de la Universidad
+dist_min <- apply(dist_matrix, 1, min)
+datad_geometria$distancia_zona <- dist_min
+
+summary(datad_geometria$distancia_zona)
+```
+
+El estadístico de resumen anterior se infiere que la encuesta mas cercana (MIN) encontrada a un bloque de la universidad es de 0 metros y el más lejano (MAX) se encuentra a 13 kilómetros, donde en niveles representativos la distancia (MEAN) entre ellas es de 859 metros.
+
+```         
+```
+
+## Graficos Plotly
+
+### Grafico No.1
+
+En el sigueiente grafico podemos visualizar cuales son esas materias que demandan mas tiempo de estudio a los universitarios del campus de la universidad, en base a esto podemos inferir que en su mayoria las zonas libres son usadas para oscio, seguidas del estudio de Calculo Integral.
+
+```{r}
+# Calcular la cantidad total de estudiantes por materia
+t_materia <- aggregate(numero_de_~ materia_qu, data = data_geometria, sum)
+
+
+fig <- plot_ly(
+  data=t_materia,
+  x = ~materia_qu,
+  y = ~numero_de_,
+  type = 'bar',
+  name = 'No. de Estudiantes por Materia'
+)
+
+
+# Personalizar el gráfico
+fig <- fig %>% layout(
+  title = 'Cantidad de Estudiantes por Materia',
+  xaxis = list(title = 'Materia'),
+  yaxis = list(title = 'Cantidad de Estudiantes')
+)
+
+# Mostrar el gráfico
+fig
+
+```
+
+### Grafico No.2 (Numero de personas por carrera en zona) Interactivo
+
+En esta gráfico vemos ahora, un analisis mas profundo, donde podemos observar no solo la carrera que se estudia sino que materia se estudia y cuantos estudiantes se encontraban en las zonas libres, vemos que la carrera de `Economía` es la que mas usa la zonas de estudio (En las fechas analizadas)
+
+```{r}
+
+g<-ggplot(data)+
+  aes(x=materia_qu,
+      y=numero_de_,
+      colour=carrera_qu)+
+  geom_point()+
+  labs(title="Estudiantes en zona de estudio por carrera",x="Materia que estudia",y="Numero de estudiantes en la zona")+
+  scale_colour_discrete(name="carrera que estudia")+
+  theme_bw()
+  ggplotly(g)
+```
+
+## Referencias:
+
+[Sánchez Alberca, Alfredo. 2024. “Creación de documentos científicos con Quarto.” March 1, 2024.](https://aprendeconalf.es/quarto-textos-cientificos/#temas)
+
+[Anexo F Quarto](https://bookdown.org/gcorrea/Rpap/quarto.html)
+
+[Uso de ploty para graficos interactivos](https://rstudio-pubs-static.s3.amazonaws.com/909542_bdb73ab2eb1b48ac93086dd1d225a724.html)
+
+[Time Series and Date Axes in R](https://plotly.com/r/time-series/)
+
+[Modelo predictivo de las viviendas del área metropolitana de Barranquilla](https://modelpredictmlbq.netlify.app/)
+
+[Visualización interactiva en R: crea gráficos interactivos con plotly](https://blog-r.es/rstudio/visualizacion-interactiva-en-r-con-plotly/)
+
+[Cree gráficos ggplot2 interactivos con Plotly en R](https://barcelonageeks.com/cree-graficos-ggplot2-interactivos-con-plotly-en-r/)
+
+[DIAGRAMAS DE BARRAS EN R - PLOTLY](https://www.youtube.com/watch?v=Tr5W0IGwA5A&ab_channel=Codynamico)

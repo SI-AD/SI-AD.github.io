@@ -3,9 +3,9 @@ output_dir: "."
 navbar:
   title: "SIAD"
   left:
-    - text: "Home"
+    - text: "Inicio"
       href: index.html
-    - text: "About"
+    - text: "Proyectos"
       href: about.html
 output:
   html_document:

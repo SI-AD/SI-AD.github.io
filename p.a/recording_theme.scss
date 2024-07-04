@@ -1,0 +1,60 @@
+/*-- scss:defaults --*/
+
+$softpurple: #BFA5FB;
+$mintblue: #0bcabc;
+$greypale: #f6f7f7;
+$softyellow: #fCf3cf;
+$paleorange: #f6b03d;
+$orangedark: #BA4A00;
+$coralred: #A10707;
+$darkgrey: #3d3d3d;
+$middlegrey: #9dacac;
+$coralpink: #ef516b;
+$bluegrey: #c3cbcb;
+$pastelpink: #ed88d0;
+$tittleblue: #021556;
+$purewhite: #FDFEFE; 
+$pureblack: #000000;
+$deepblue: #2C078F;
+$softblue: #D5D3FF;
+
+//
+$body-bg: $purewhite;
+$code-block-bg: $softblue;
+$link-color: $paleorange; 
+
+/*-- scss:rules --*/
+
+// Customize the light and dark text colors for use in our color contrast function.
+
+$color-contrast-dark:      $black !default;
+$color-contrast-light:     $white !default;
+
+$font-family-sans-serif: "Vogue", "Georgia", "Apple";
+
+//tittle font change, color and style
+h1, h2, h3, h4, h5 {
+  color:$purewhite;
+  font-weight: bold;
+  font-family: Sans-Serif;
+}
+
+//Paragraph color
+p{
+  color: $purewhite;
+  font-style: italic;
+}
+
+//Table color changes
+table{
+  color: $deepblue; 
+}
+
+
+
+
+
+
+
+
+
