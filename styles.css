@@ -35,7 +35,6 @@ body::before {
     height: 100%;
 }
 
-
 /* Estilos para las secciones del contenido */
 section {
     margin-bottom: 50px; /* Define un margen inferior para separar las secciones */
@@ -90,6 +89,26 @@ button:hover {
   color: black; /* Color del texto en hover */
 }
 
+/* Estilo para hacer que las tablas sean responsivas */
+.responsive-table {
+  width: 100%;
+  max-width: 100%;
+  overflow-x: auto;
+}
+
+/* Estilo para hacer que los gráficos sean responsivos */
+.responsive-plot {
+  width: 100%;
+  max-width: 100%;
+  height: auto;
+}
+
+/* Estilo para hacer que los mapas sean responsivos */
+.responsive-map {
+  width: 100%;
+  max-width: 100%;
+  height: 500px; /* Ajusta según tus necesidades */
+}
 
 
 
