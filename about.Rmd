@@ -8,5 +8,4 @@ output: html_document
 <ul class="project-menu">
   <li><a href="p1.html">ANALISIS SOBRE EL USO DE LAS ZONAS DE ESTUDIO (Unimag)</a></li>
   <li><a href="p2.html">Proyecto 2</a></li>
-  <li><a href="p3.html">Proyecto 3</a></li>
 </ul>
