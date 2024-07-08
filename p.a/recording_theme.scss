@@ -34,10 +34,18 @@ $font-family-sans-serif: "Vogue", "Georgia", "Apple";
 
 //tittle font change, color and style
 h1, h2, h3, h4, h5 {
-  color:$purewhite;
+  color: $black;
   font-weight: bold;
-  font-family: Sans-Serif;
+  font-family: Times New Roman;
 }
+
+body {
+    font-family: Times New Roman; /* Define la fuente de texto */
+    color: black; /* Cambia el color del texto a blanco para que se vea bien sobre la imagen */
+    text-align: justify;
+    line-height: 1.6; /* Define la altura de línea para mejorar la legibilidad */
+}
+
 
 //Paragraph color
 p{

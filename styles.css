@@ -3,12 +3,27 @@ body {
     color: black; /* Cambia el color del texto a blanco para que se vea bien sobre la imagen */
     text-align: justify;
     line-height: 1.6; /* Define la altura de línea para mejorar la legibilidad */
-
 }
+
+.navbar-brand {
+  background: url("imagenes/logo2.jpg") no-repeat center;
+  background-size: contain;
+  display: block;
+  opacity: 0.8;
+  height: 50px; /* Ajusta la altura según tus necesidades */
+  width: 100px; /* Ajusta el ancho según tus necesidades */
+}
+
+h1, h2, h3, h4, h5 {
+  color: $black;
+  font-weight: bold;
+  font-family: Times New Roman;
+}
+
 
 body::before {  
     content: "";
-    background-image: url('imagenes/logo.jpg'); /* Ruta relativa a la imagen */
+    background-image: url('imagenes/logo3.jpg'); /* Ruta relativa a la imagen */
     background-size: 30%; /* Ajusta la imagen para que cubra toda la página */
     opacity: 0.8;
     background-attachment: fixed; /* Hace que la imagen de fondo no se mueva al hacer scroll */
@@ -45,3 +60,36 @@ button:hover {
         padding: 10px; /* Reduce el relleno interior en contenedores en pantallas pequeñas */
     }
 }
+
+/* Estilo para el contenedor del menú de proyectos */
+.project-menu {
+  list-style-type: none; /* Quita los puntos de las listas */
+  padding: 0; /* Elimina el padding */
+  margin: 0; /* Elimina el margen */
+}
+
+/* Estilo para cada elemento del menú */
+.project-menu li {
+  margin-bottom: ; /* Espacio entre los elementos del menú */
+}
+
+/* Estilo para los enlaces del menú */
+.project-menu a {
+  text-decoration: none; /* Elimina el subrayado de los enlaces */
+  color: #007bff; /* Color del texto del enlace (puedes cambiarlo según tu tema) */
+  font-weight: bold; /* Hace que el texto sea negrita */
+  font-size: 16px; /* Tamaño de fuente del enlace */
+  display: block; /* Hace que el enlace ocupe toda la línea */
+  padding: 1px; /* Espaciado alrededor del texto */
+  transition: background-color 0.3s ease, color 0.3s ease; /* Transición suave para los efectos de hover */
+}
+
+/* Estilo para el enlace cuando se pasa el cursor por encima */
+.project-menu a:hover {
+  background-color: #e9ecef; /* Fondo del enlace en hover (puedes cambiarlo) */
+  color: black; /* Color del texto en hover */
+}
+
+
+
+

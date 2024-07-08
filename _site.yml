@@ -1,7 +1,7 @@
 name: "SIAD"
 output_dir: "."
 navbar:
-  title: "SIAD"
+  title: ""
   left:
     - text: "nicio"
       href: index.html
